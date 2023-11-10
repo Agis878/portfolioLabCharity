@@ -1,4 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
+  const userData = {
+    categories: [],
+    quantity: 0,
+    institution: null,
+    street: '',
+    city: '',
+    zipCode: '',
+    pickUpDate: '',
+    pickUpTime: '',
+    pickUpComment: '',
+  };
 
   /**
    * Form Select
@@ -122,8 +133,8 @@ document.addEventListener("DOMContentLoaded", function() {
      */
     events() {
       // Next step
-      this.$next.forEach(btn => {
-        btn.addEventListener("click", e => {
+      this.$next.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
           e.preventDefault();
           this.currentStep++;
           this.updateForm();
@@ -131,8 +142,8 @@ document.addEventListener("DOMContentLoaded", function() {
       });
 
       // Previous step
-      this.$prev.forEach(btn => {
-        btn.addEventListener("click", e => {
+      this.$prev.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
           e.preventDefault();
           this.currentStep--;
           this.updateForm();
@@ -140,7 +151,9 @@ document.addEventListener("DOMContentLoaded", function() {
       });
 
       // Form submit
-      this.$form.querySelector("form").addEventListener("submit", e => this.submit(e));
+      this.$form
+          .querySelector("form")
+          .addEventListener("submit", (e) => this.submit(e));
     }
 
     /**
@@ -148,11 +161,12 @@ document.addEventListener("DOMContentLoaded", function() {
      * Show next or previous section etc.
      */
     updateForm() {
+      console.log("Updated userData:", userData);
       this.$step.innerText = this.currentStep;
 
       // TODO: Validation
 
-      this.slides.forEach(slide => {
+      this.slides.forEach((slide) => {
         slide.classList.remove("active");
 
         if (slide.dataset.step == this.currentStep) {
@@ -160,15 +174,128 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       });
 
-      this.$stepInstructions[0].parentElement.parentElement.hidden = this.currentStep >= 5;
+      this.$stepInstructions[0].parentElement.parentElement.hidden =
+          this.currentStep >= 5;
       this.$step.parentElement.hidden = this.currentStep >= 5;
 
       // TODO: get data from inputs and show them in summary
-    }
 
+
+      console.log("Updated userData:", userData);
+    }
   }
+
+  function updateUserData() {
+    userData.quantity = document.querySelector("input[name='quantity']").value;
+    userData.institution = document.querySelector("input[name='institution']:checked")?.value || null;
+    userData.street = document.querySelector("input[name='street']").value;
+    userData.city = document.querySelector("input[name='city']").value;
+    userData.zipCode = document.querySelector("input[name='zipCode']").value;
+    userData.pickUpDate = document.querySelector("input[name='pickUpDate']").value;
+    userData.pickUpTime = document.querySelector("input[name='pickUpTime']").value;
+    userData.pickUpComment = document.querySelector("textarea[name='pickUpComment']").value;
+  }
+
+  function updateCategories() {
+    userData.categories = [];
+
+    categoryData.forEach(category => {
+      var checkbox = document.querySelector(`input[name='categories'][value='${category.id}']`);
+
+      if (checkbox && checkbox.checked) {
+        userData.categories.push(category.name);
+      }
+    });
+  }
+
+
+  function updateInstitution() {
+    userData.institution = null;
+
+    var checkedRadio = document.querySelector("input[name='institution']:checked");
+
+    if (checkedRadio) {
+      var institutionId = parseInt(checkedRadio.value);
+
+      // Znajdź obiekt instytucji w institutionData na podstawie identyfikatora
+      var selectedInstitution = institutionData.find(institution => institution.id === institutionId);
+
+      // Przypisz nazwę instytucji do userData.institution
+      userData.institution = selectedInstitution ? selectedInstitution.name : null;
+      showSummary(list1, list2);
+    }
+  }
+
   const form = document.querySelector(".form--steps");
   if (form !== null) {
-    new FormSteps(form);
+    const formSteps = new FormSteps(form);
+    form.querySelector(".btn.next-step:last-child").addEventListener("click", function () {
+      updateUserData();
+      updateCategories();
+      console.log("institutionData", institutionData);
+      updateInstitution();
+      console.log("USER", userData); // Dodaj to, aby sprawdzić, czy dane są zaktualizowane
+
+      showSummary(list1, list2);
+    });
+  }
+
+// Pamiętaj, aby zdefiniować elementy list1 i list2 przed wywołaniem showSummary
+  const list1 = document.getElementById('list1');
+  const list2 = document.getElementById('list2');
+
+
+  function showSummary(list1, list2) {
+    const addressList = document.getElementById("addressList");
+    const pickupList = document.getElementById("pickupList");
+
+
+    // Czyść poprzednie dane w sekcji podsumowania
+    list1.innerHTML = "";
+    list2.innerHTML = "";
+    addressList.innerHTML = "";
+    pickupList.innerHTML = "";
+
+    // userData.categories = categoryData.map(category => category.name);
+    userData.quantity = document.querySelector("input[name='quantity']").value;
+    // userData.institution = document.querySelector("input[name='institution']:checked")?.value || null;
+    userData.street = document.querySelector("input[name='street']").value;
+    userData.city = document.querySelector("input[name='city']").value;
+    userData.zipCode = document.querySelector("input[name='zipCode']").value;
+    userData.pickUpDate = document.querySelector("input[name='pickUpDate']").value;
+    userData.pickUpTime = document.querySelector("input[name='pickUpTime']").value;
+    userData.pickUpComment = document.querySelector("textarea[name='pickUpComment']").value;
+
+
+    // Dodaj dane do sekcji podsumowania
+
+    // Dodaj elementy do list1 i list2
+    list1.appendChild(addSummaryItem(`${userData.quantity} ${userData.quantity === "1" ? "worek" : "worki"} ${userData.categories}`, true));
+    list2.appendChild(addSummaryItem(`Dla fundacji "${userData.institution}"`, false));
+
+    // Dodaj dane o adresie odbioru
+    addListItem(addressList, userData.street);
+    addListItem(addressList, userData.city);
+    addListItem(addressList, userData.zipCode);
+
+    // Dodaj dane o terminie odbioru
+    addListItem(pickupList, userData.pickUpDate);
+    addListItem(pickupList, userData.pickUpTime);
+    addListItem(pickupList, userData.pickUpComment);
+  }
+
+  function addSummaryItem(content, isList1 = false) {
+    const listItem = document.createElement("li");
+    const iconClass = isList1 ? "icon-bag" : "icon-hand";
+    const quantityText = userData.quantity === "1" ? "worek" : "worki";
+
+    listItem.innerHTML = `<span class="icon ${iconClass}"></span><span class="summary--text">${content}</span>`;
+    return listItem;
+  }
+
+  function addListItem(list, content) {
+    const listItem = document.createElement("li");
+    listItem.textContent = content;
+    list.appendChild(listItem);
   }
 });
