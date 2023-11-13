@@ -78,6 +78,8 @@
             <!-- STEP 1: class .active is switching steps -->
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
+
+
                 <form:checkboxes path="categories" items="${not empty categoryList ? categoryList : ''}" itemValue="id"
                                  itemLabel="name" name="selectedCategories"/>
 
@@ -223,14 +225,14 @@
 
 <include file="footer.jsp"/>
 <script>
-    var categoryData = [
+    const categoryData = [
         <c:forEach var="category" items="${categoryList}" varStatus="loop">
         {id: ${category.id}, name: '${category.name}'}<c:if test="${!loop.last}">, </c:if>
         </c:forEach>
     ];
 </script>
 <script>
-    var institutionData = [
+    const institutionData = [
         <c:forEach var="institution" items="${institutionList}" varStatus="loop">
         {id: ${institution.id}, name: '${institution.name}'}<c:if test="${!loop.last}">, </c:if>
         </c:forEach>

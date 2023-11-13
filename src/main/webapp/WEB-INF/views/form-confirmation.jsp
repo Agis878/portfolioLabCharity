@@ -21,7 +21,7 @@
 </head>
 <body>
 <header class="header--form-page">
-    <script src="header.jsp"></script>
+    <include file="header_footer/header.jsp"></include>
 
     <div class="slogan container container--90">
         <h2>
@@ -32,8 +32,8 @@
 </header>
 
 
-<script src="footer.jsp"></script>
-<script src="js/app.js"></script>
+<script src="header_footer/footer.jsp"></script>
+<include file="header_footer/footer.jsp"/>
 </body>
 </html>
 

@@ -1,15 +1,19 @@
-document.addEventListener("DOMContentLoaded", function() {
-  const userData = {
-    categories: [],
-    quantity: 0,
-    institution: null,
-    street: '',
-    city: '',
-    zipCode: '',
-    pickUpDate: '',
-    pickUpTime: '',
-    pickUpComment: '',
-  };
+const userData = {
+  categories: [],
+  quantity: 0,
+  institution: null,
+  street: '',
+  city: '',
+  zipCode: '',
+  pickUpDate: '',
+  pickUpTime: '',
+  pickUpComment: '',
+};
+
+// Pamiętaj, aby zdefiniować elementy list1 i list2 przed wywołaniem showSummary
+const list1 = document.getElementById('list1');
+const list2 = document.getElementById('list2');
+document.addEventListener("DOMContentLoaded", function () {
 
   /**
    * Form Select
@@ -166,6 +170,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // TODO: Validation
 
+      updateUserData();
+      updateCategories();
+      updateInstitution();
+
       this.slides.forEach((slide) => {
         slide.classList.remove("active");
 
@@ -200,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function() {
     userData.categories = [];
 
     categoryData.forEach(category => {
-      var checkbox = document.querySelector(`input[name='categories'][value='${category.id}']`);
+      const checkbox = document.querySelector(`input[name='categories'][value='${category.id}']`);
 
       if (checkbox && checkbox.checked) {
         userData.categories.push(category.name);
@@ -212,13 +220,13 @@ document.addEventListener("DOMContentLoaded", function() {
   function updateInstitution() {
     userData.institution = null;
 
-    var checkedRadio = document.querySelector("input[name='institution']:checked");
+    const checkedRadio = document.querySelector("input[name='institution']:checked");
 
     if (checkedRadio) {
-      var institutionId = parseInt(checkedRadio.value);
+      const institutionId = parseInt(checkedRadio.value);
 
       // Znajdź obiekt instytucji w institutionData na podstawie identyfikatora
-      var selectedInstitution = institutionData.find(institution => institution.id === institutionId);
+      const selectedInstitution = institutionData.find(institution => institution.id === institutionId);
 
       // Przypisz nazwę instytucji do userData.institution
       userData.institution = selectedInstitution ? selectedInstitution.name : null;
@@ -230,19 +238,16 @@ document.addEventListener("DOMContentLoaded", function() {
   if (form !== null) {
     const formSteps = new FormSteps(form);
     form.querySelector(".btn.next-step:last-child").addEventListener("click", function () {
-      updateUserData();
-      updateCategories();
-      console.log("institutionData", institutionData);
-      updateInstitution();
-      console.log("USER", userData); // Dodaj to, aby sprawdzić, czy dane są zaktualizowane
-
+      console.log("Przycisk kliknięty");
+      // updateUserData();
+      // updateCategories();
+      // console.log("institutionData", institutionData);
+      // updateInstitution();
+      // console.log("USER", userData); // Dodaj to, aby sprawdzić, czy dane są zaktualizowane
+      console.log("Wywołanie showSummary");
       showSummary(list1, list2);
     });
   }
-
-// Pamiętaj, aby zdefiniować elementy list1 i list2 przed wywołaniem showSummary
-  const list1 = document.getElementById('list1');
-  const list2 = document.getElementById('list2');
 
 
   function showSummary(list1, list2) {
@@ -256,18 +261,7 @@ document.addEventListener("DOMContentLoaded", function() {
     addressList.innerHTML = "";
     pickupList.innerHTML = "";
 
-    // userData.categories = categoryData.map(category => category.name);
-    userData.quantity = document.querySelector("input[name='quantity']").value;
-    // userData.institution = document.querySelector("input[name='institution']:checked")?.value || null;
-    userData.street = document.querySelector("input[name='street']").value;
-    userData.city = document.querySelector("input[name='city']").value;
-    userData.zipCode = document.querySelector("input[name='zipCode']").value;
-    userData.pickUpDate = document.querySelector("input[name='pickUpDate']").value;
-    userData.pickUpTime = document.querySelector("input[name='pickUpTime']").value;
-    userData.pickUpComment = document.querySelector("textarea[name='pickUpComment']").value;
 
-
-    // Dodaj dane do sekcji podsumowania
 
     // Dodaj elementy do list1 i list2
     list1.appendChild(addSummaryItem(`${userData.quantity} ${userData.quantity === "1" ? "worek" : "worki"} ${userData.categories}`, true));

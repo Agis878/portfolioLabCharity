@@ -10,24 +10,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Home</title>
 
-    <link rel="stylesheet" href="<c:url value="/css/style.css"/>"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css"/>
+    "/>
 </head>
 <body>
 <header class="header--main-page">
-    <nav class="container container--70">
-        <ul class="nav--actions">
-            <li><a href="" class="btn btn--small btn--without-border">Zaloguj</a></li>
-            <li><a href="#" class="btn btn--small btn--highlighted">Załóż konto</a></li>
-        </ul>
-
-        <ul>
-            <li><a href="#" class="btn btn--without-border active">Start</a></li>
-            <li><a href="#" class="btn btn--without-border">O co chodzi?</a></li>
-            <li><a href="#" class="btn btn--without-border">O nas</a></li>
-            <li><a href="#" class="btn btn--without-border">Fundacje i organizacje</a></li>
-            <li><a href="#" class="btn btn--without-border">Kontakt</a></li>
-        </ul>
-    </nav>
+    <%@include file="header_footer/header.jsp" %>
 
     <div class="slogan container container--90">
         <div class="slogan--item">
@@ -50,7 +38,7 @@
         </div>
 
         <div class="stats--item">
-            <em>${doantionSum}</em>
+            <em>${donationSum}</em>
             <h3>Przekazanych darów</h3>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam magnam, sint nihil cupiditate quas
                 quam.</p>
@@ -85,7 +73,7 @@
         </div>
     </div>
 
-    <a href="#" class="btn btn--large">Załóż konto</a>
+    <a href="/register" class="btn btn--large">Załóż konto</a>
 </section>
 
 <section class="about-us">
@@ -129,55 +117,7 @@
 
 </section>
 
-<%--        <ul class="help--slides-items">--%>
-<%--            <li>--%>
-<%--                <div class="col">--%>
-<%--                    <div class="title">Fundacja "Dbam o Zdrowie"</div>--%>
-<%--                    <div class="subtitle">Cel i misja: Pomoc dzieciom z ubogich rodzin.</div>--%>
-<%--                </div>--%>
-
-<%--                <div class="col">--%>
-<%--                    <div class="title">Fundacja "A kogo"</div>--%>
-<%--                    <div class="subtitle">Cel i misja: Pomoc wybudzaniu dzieci ze śpiączki.</div>--%>
-<%--                </div>--%>
-<%--            </li>--%>
-
-<%--            <li>--%>
-<%--                <div class="col">--%>
-<%--                    <div class="title">Fundacja “Dla dzieci"</div>--%>
-<%--                    <div class="subtitle">Cel i misja: Pomoc osobom znajdującym się w trudnej sytuacji życiowej.</div>--%>
-<%--                </div>--%>
-<%--                <div class="col">--%>
-<%--                    <div class="title">Fundacja “Bez domu”</div>--%>
-<%--                    <div class="subtitle">Cel i misja: Pomoc dla osób nie posiadających miejsca zamieszkania</div>--%>
-<%--                </div>--%>
-
-<%--            </li>--%>
-
-
-<footer>
-    <div class="contact">
-        <h2>Skontaktuj się z nami</h2>
-        <h3>Formularz kontaktowy</h3>
-        <form class="form--contact">
-            <div class="form-group form-group--50"><input type="text" name="name" placeholder="Imię"/></div>
-            <div class="form-group form-group--50"><input type="text" name="surname" placeholder="Nazwisko"/></div>
-
-            <div class="form-group"><textarea name="message" placeholder="Wiadomość" rows="1"></textarea></div>
-
-            <button class="btn" type="submit">Wyślij</button>
-        </form>
-    </div>
-    <div class="bottom-line">
-        <span class="bottom-line--copy">Copyright &copy; 2018</span>
-        <div class="bottom-line--icons">
-            <a href="#" class="btn btn--small"><img src="images/icon-facebook.svg"/></a> <a href="#"
-                                                                                            class="btn btn--small"><img
-                src="images/icon-instagram.svg"/></a>
-        </div>
-    </div>
-</footer>
-
+<%@include file="header_footer/footer.jsp" %>
 <script src="<c:url value="/js/app.js"/>"></script>
 </body>
 </html>

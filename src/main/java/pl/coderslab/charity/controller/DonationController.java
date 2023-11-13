@@ -37,16 +37,13 @@ public class DonationController {
         model.addAttribute("institutionList", institutionService.findAll());
         model.addAttribute("donation", new Donation());
 
-        // Dodaj wiadomość logującą
-        System.out.println("Category List: " + categoryList);
+
         return "form";
     }
 
     @PostMapping
     public String addDonation(@Valid Donation donation, BindingResult bindingResult, Model model) {
-//        if (bindingResult.hasErrors()) {
-//            return "redirect:/form";
-//        }
+
         donationService.save(donation);
         return "form-confirmation";
     }
