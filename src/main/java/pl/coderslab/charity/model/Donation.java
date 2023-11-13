@@ -25,8 +25,11 @@ public class Donation {
 
     private Integer quantity;
 
-    @OneToMany(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "donation_id")
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "donation_category",
+            joinColumns = @JoinColumn(name = "donation_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
 
     @ManyToOne
@@ -45,6 +48,10 @@ public class Donation {
     private LocalTime pickUpTime;
 
     private String pickUpComment;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Override
     public String toString() {
