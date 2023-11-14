@@ -28,6 +28,7 @@
 
 <!-- Page Wrapper -->
 <div id="wrapper">
+    <%--    <%@include file="sidebar/sidebar.jsp" %>--%>
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -349,7 +350,7 @@
 
                     <!-- Lista userów Card Example -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <a href=${pageContext.request.contextPath}/admin/admins
+                        <a href=${pageContext.request.contextPath}/admin/users
                            style="text-decoration: none; color: inherit;">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
@@ -358,7 +359,7 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Lista Użytkowników
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${adminQty}</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${userQty}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>

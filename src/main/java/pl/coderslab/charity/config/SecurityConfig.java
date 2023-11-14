@@ -22,7 +22,7 @@ public class SecurityConfig {
         return http.authorizeHttpRequests()
                 .antMatchers("/bootstrap/**", "/css/**", "/js/**", "/images/**", "/header_footer/**").permitAll()
                 .antMatchers("/", "/form", "/register", "/login").permitAll()
-                .antMatchers("/admin", "admin/**").hasRole("ADMIN")
+                .antMatchers("admin/**").hasRole("ADMIN")
                 .antMatchers("favicon.ico").permitAll()
                 .anyRequest().authenticated()
                 .and()

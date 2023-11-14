@@ -35,11 +35,25 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
-    public User save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("ROLE_USER");
-        user.setActive(true);
-        return userRepository.save(user);
+    public void save(User user) {
+        if (user.getId() != null) {
+            // If user has an ID, it means it already exists, so update it
+            Optional<User> existingUser = userRepository.findById(user.getId());
+            if (existingUser.isPresent()) {
+                User oldUser = existingUser.get();
+                oldUser.setUsername(user.getUsername());
+                oldUser.setRole(user.getRole());
+                oldUser.setActive(user.getActive());
+
+
+                userRepository.save(oldUser);
+            }
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRole("ROLE_USER");
+            user.setActive(true);
+            userRepository.save(user);
+        }
     }
 
     public User getByUsername(String username) {
