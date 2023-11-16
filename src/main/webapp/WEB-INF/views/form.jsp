@@ -79,30 +79,25 @@
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
 
+                <div class="form-group form-group--checkbox">
+                    <c:forEach var="category" items="${not empty categoryList ? categoryList : ''}">
+                        <label class="checkbox-label">
+                            <input
+                                    type="checkbox"
+                                    name="selectedCategories"
+                                    value="${category.id}"
+                                    id="category${category.id}"
+                            />
+                            <span class="checkbox"></span>
+                            <span class="description">${category.name}</span>
+                        </label>
+                    </c:forEach>
+                </div>
 
-                <form:checkboxes path="categories" items="${not empty categoryList ? categoryList : ''}" itemValue="id"
-                                 itemLabel="name" name="selectedCategories"/>
-
-                    <%--                <form:checkboxes path="categories" items="${categoryList}" itemValue="id" itemLabel="name" name="selectedCategories"/>--%>
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn next-step">Dalej</button>
                 </div>
             </div>
-
-
-            <%--                <div class="form-group form-group--checkbox">--%>
-            <%--                    <label>--%>
-            <%--                        <input--%>
-            <%--                                type="checkbox"--%>
-            <%--                                name="categories"--%>
-            <%--                                value="clothes-to-use"--%>
-            <%--                        />--%>
-            <%--                        <span class="checkbox"></span>--%>
-            <%--                        <span class="description"--%>
-            <%--                        >ubrania, które nadają się do ponownego użycia</span--%>
-            <%--                        >--%>
-            <%--                    </label>--%>
-            <%--                </div>--%>
 
             <!-- STEP 2 -->
             <div data-step="2">

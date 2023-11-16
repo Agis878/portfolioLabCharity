@@ -621,6 +621,13 @@ form .form-group--checkbox .checkbox {
   cursor: pointer;
 }
 
+/* Style for checkbox label */
+/* Vertical spacing between checkboxes */
+.form-group--checkbox .checkbox-label {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 10px;
+}
 /* line 78, scss/modules/_forms.scss */
 form .form-group--checkbox .checkbox:not(:empty) {
   padding: 6px 10px;
