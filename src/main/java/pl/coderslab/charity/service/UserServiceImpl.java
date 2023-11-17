@@ -3,6 +3,7 @@ package pl.coderslab.charity.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.coderslab.charity.controller.mapper.UserMapper;
 import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.repositories.UserRepository;
 
@@ -13,23 +14,24 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
+
 
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
-
     public List<User> findAllByRole(String role) {
         return userRepository.findAllByRole(role);
     }
-
 
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
@@ -42,6 +44,8 @@ public class UserServiceImpl implements UserService {
             if (existingUser.isPresent()) {
                 User oldUser = existingUser.get();
                 oldUser.setUsername(user.getUsername());
+                oldUser.setFirstName(user.getFirstName());
+                oldUser.setLastName(user.getLastName());
                 oldUser.setRole(user.getRole());
                 oldUser.setActive(user.getActive());
 

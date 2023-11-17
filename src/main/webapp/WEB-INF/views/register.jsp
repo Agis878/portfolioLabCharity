@@ -27,22 +27,25 @@
 
 <section class="login-page">
     <h2>Załóż konto</h2>
-
-    <%--@elvariable id="user" type=""--%>
-    <form:form method="post" modelAttribute="user" action="/register">
+    <form:form method="post" modelAttribute="userDTO" action="/register">
 
         <div class="form-group">
-
+            <form:input path="firstName" id="firstName" placeholder="Imię"/>
+            <form:errors path="firstName"/>
+        </div>
+        <div class="form-group">
+            <form:input path="lastName" id="lastName" placeholder="Nazwisko"/>
+            <form:errors path="lastName"/>
+        </div>
+        <div class="form-group">
             <form:input path="username" id="username" placeholder="Email"/>
             <form:errors path="username"/>
         </div>
         <div class="form-group">
-
             <form:password path="password" id="password" placeholder="Password"/>
             <form:errors path="password"/>
         </div>
         <div class="form-group">
-
             <form:password path="passwordConfirm" id="passwordConfirm" placeholder="Confirm Password"/>
             <form:errors path="passwordConfirm"/>
         </div>
@@ -51,42 +54,6 @@
             <form:button class="btn" type="submit">Załóż konto</form:button>
         </div>
     </form:form>
-
-
-    <%--    <form:form method="post"  modelAttribute="user">--%>
-
-    <%--        <div class="form-group">--%>
-    <%--            <label for="username">Login</label>--%>
-    <%--            <form:input path="username" placeholder="Login"/>--%>
-    <%--            <form:errors path="username"/>--%>
-    <%--        </div>--%>
-    <%--        <div class="form-group">--%>
-    <%--            <label for="password">Password</label>--%>
-    <%--            <form:input path="password" placeholder="Password"/>--%>
-    <%--            <form:errors path="password"/>--%>
-    <%--        </div>--%>
-
-    <%--        <form:button class="btn btn-primary">Register</form:button>--%>
-    <%--        <button class="btn btn-secondary" type="reset">Clean</button>--%>
-
-    <%--    </form:form>--%>
-
-    <%--    <form>--%>
-    <%--        <div class="form-group">--%>
-    <%--            <input type="email" name="email" placeholder="Email" />--%>
-    <%--        </div>--%>
-    <%--        <div class="form-group">--%>
-    <%--            <input type="password" name="password" placeholder="Hasło" />--%>
-    <%--        </div>--%>
-    <%--        <div class="form-group">--%>
-    <%--            <input type="password" name="password2" placeholder="Powtórz hasło" />--%>
-    <%--        </div>--%>
-
-    <%--        <div class="form-group form-group--buttons">--%>
-    <%--            <a href="login.html" class="btn btn--without-border">Zaloguj się</a>--%>
-    <%--            <button class="btn" type="submit">Załóż konto</button>--%>
-    <%--        </div>--%>
-    <%--    </form>--%>
 </section>
 
 <%@include file="header_footer/footer.jsp" %>
