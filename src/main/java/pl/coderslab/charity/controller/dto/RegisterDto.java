@@ -4,8 +4,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-public record UserDto(
-        Long id,
+public record RegisterDto(
         @Email
         @NotBlank
         String username,

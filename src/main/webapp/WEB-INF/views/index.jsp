@@ -11,7 +11,7 @@
     <title>Home</title>
 
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css"/>
-    "/>
+
 </head>
 <body>
 <header class="header--main-page">
@@ -100,21 +100,16 @@
                 <c:if test="${loopStatus.index % 2 == 0}">
                     <li>
                 </c:if>
-
                 <div class="col">
                     <div class="title">Fundacja "${institution.name}"</div>
                     <div class="subtitle">Cel i misja: ${institution.description}.</div>
                 </div>
-
                 <c:if test="${loopStatus.index % 2 == 1 || loopStatus.last}">
                     </li>
                 </c:if>
             </c:forEach>
-
-
         </ul>
     </div>
-
 </section>
 
 <%@include file="header_footer/footer.jsp" %>

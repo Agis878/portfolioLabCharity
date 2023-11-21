@@ -26,7 +26,10 @@
         <ul class="nav--actions">
             <li>Witaj ${loggedUser.firstName}</li>
         </ul>
-
+        <ul>
+            <li><a href="/user/update" class="btn btn--without-border">Edytuj profil</a></li>
+            <li><a href="/user/donations" class="btn btn--without-border">Przekazane dary</a></li>
+        </ul>
         <ul>
             <li><a href="/form" class="btn btn--without-border active">Start</a></li>
             <li><a href="#steps" class="btn btn--without-border">O co chodzi?</a></li>
@@ -93,7 +96,7 @@
         </div>
     </div>
 
-    <a href="/register" class="btn btn--large">Załóż konto</a>
+
 </section>
 
 <section class="about-us">
@@ -107,7 +110,7 @@
     </div>
 </section>
 
-<section class="help">
+<section class="help" id="help">
     <h2>Komu pomagamy?</h2>
 
     <!-- SLIDE 1 -->
