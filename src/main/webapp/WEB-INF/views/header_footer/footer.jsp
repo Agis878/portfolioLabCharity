@@ -8,19 +8,42 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+
 <footer>
     <div id="contact" class="contact">
         <h2>Skontaktuj się z nami</h2>
         <h3>Formularz kontaktowy</h3>
-        <form class="form--contact">
-            <div class="form-group form-group--50"><input type="text" name="name" placeholder="Imię" /></div>
-            <div class="form-group form-group--50"><input type="text" name="surname" placeholder="Nazwisko" /></div>
 
-            <div class="form-group"><textarea name="message" placeholder="Wiadomość" rows="1"></textarea></div>
+        <form:form class="form--contact" action="/send-email-form" method="post" modelAttribute="feedback">
 
-            <button class="btn" type="submit">Wyślij</button>
-        </form>
+            <div class="form-group form-group--50">
+                <form:input path="name" type="text" name="name" placeholder="Imię"/>
+            </div>
+            <div class="form-group form-group--50">
+                <!-- Warunkowe wyświetlanie pola email -->
+                <c:choose>
+                    <c:when test="${not empty loggedUser}">
+                        <!-- Użyj unikalnego identyfikatora, gdy użytkownik jest zalogowany -->
+                        <form:input path="email" id="emailForLoggedInUser" type="text" name="email" placeholder="Email"
+                                    value="${loggedUser.username}" readonly="true"/>
+                    </c:when>
+                    <c:otherwise>
+                        <!-- Użyj innego unikalnego identyfikatora, gdy użytkownik nie jest zalogowany -->
+                        <form:input path="email" id="emailForNonLoggedInUser" type="text" name="email"
+                                    placeholder="Email"/>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <
+            <div class="form-group">
+                <form:textarea path="message" name="message" placeholder="Wiadomość" rows="1"/>
+            </div>
+            <input type="hidden" id="to" name="to" value="${emailAddress}"/>
+            <form:button type="submit">Wyślij</form:button>
+        </form:form>
     </div>
     <div class="bottom-line">
         <span class="bottom-line--copy">Copyright &copy; 2018</span>

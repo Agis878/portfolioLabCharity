@@ -1,5 +1,6 @@
 package pl.coderslab.charity.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,8 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.coderslab.charity.controller.dto.UserDto;
-import pl.coderslab.charity.model.User;
+import pl.coderslab.charity.controller.dto.RegisterDto;
+import pl.coderslab.charity.mail.Feedback;
 import pl.coderslab.charity.repositories.UserRepository;
 import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.InstitutionService;
@@ -17,7 +18,6 @@ import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
 
-import static pl.coderslab.charity.controller.mapper.UserDtoMapper.mapUserToUserDto;
 import static pl.coderslab.charity.controller.mapper.UserMapper.mapToUser;
 
 
@@ -25,6 +25,18 @@ import static pl.coderslab.charity.controller.mapper.UserMapper.mapToUser;
 @RequestMapping("/")
 public class HomeController {
 
+    @Value("${spring.mail.username}")
+    private String emailAddress;
+
+    @ModelAttribute
+    public void mailAddress(Model model) {
+        model.addAttribute("emailAddress", emailAddress);
+    }
+
+    @ModelAttribute
+    public void EmailForm(Model model) {
+        model.addAttribute("feedback", new Feedback());
+    }
     private final InstitutionService institutionService;
     private final DonationService donationService;
     private final UserService userService;
@@ -45,28 +57,27 @@ public class HomeController {
 
     @GetMapping("/register")
     public String registrationUserForm(Model model) {
-        model.addAttribute("userDTO", mapUserToUserDto(new User()));
+        model.addAttribute("userDTO", new RegisterDto(null, null, null, null, null));
         return "register";
     }
 
     @PostMapping("/register")
-    public String processRegistrationForm(@Valid @ModelAttribute("userDTO") UserDto userDTO, Errors errors) {
+    public String processRegistrationForm(@Valid @ModelAttribute("userDTO") RegisterDto userDto, Errors errors) {
         if (errors.hasErrors()) {
             return "register";
         }
 
-        // Sprawdź, czy nazwa użytkownika jest unikalna
-        if (!userService.isUsernameUnique(userDTO.username())) {
+        if (!userService.isUsernameUnique(userDto.username())) {
             errors.rejectValue("username", "error.username.exists", "Username already exists");
             return "register";
         }
 
-        // Sprawdź, czy hasło się zgadza z potwierdzeniem hasła
-        if (!userDTO.password().equals(userDTO.passwordConfirm())) {
+        if (!userDto.password().equals(userDto.passwordConfirm())) {
             errors.rejectValue("passwordConfirm", "error.password.mismatch", "Passwords do not match");
             return "register";
         }
-        userService.save(mapToUser(userDTO));
+        userService.save(mapToUser(userDto));
+
         return "redirect:/login";
     }
 

@@ -16,12 +16,12 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests()
                 .antMatchers("/bootstrap/**", "/css/**", "/js/**", "/images/**", "/header_footer/**").permitAll()
-                .antMatchers("/", "/form", "/register", "/login").permitAll()
+                .antMatchers("/send-email-form").permitAll()
+                .antMatchers("/", "/form", "/register", "/login", "/email-result").permitAll()
                 .antMatchers("admin/**").hasRole("ADMIN")
                 .antMatchers("favicon.ico").permitAll()
                 .anyRequest().authenticated()
@@ -45,7 +45,6 @@ public class SecurityConfig {
                 .and()
                 .build();
     }
-
 }
 
 
