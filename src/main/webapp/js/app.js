@@ -13,6 +13,10 @@ const userData = {
 
 const list1 = document.getElementById('list1');
 const list2 = document.getElementById('list2');
+
+function goBack() {
+    window.history.back();
+}
 document.addEventListener("DOMContentLoaded", function () {
 
     /**
@@ -272,4 +276,5 @@ document.addEventListener("DOMContentLoaded", function () {
         listItem.textContent = content;
         list.appendChild(listItem);
     }
+
 });

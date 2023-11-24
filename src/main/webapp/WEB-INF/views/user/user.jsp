@@ -18,7 +18,6 @@
     <title>Home</title>
 
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css"/>
-    "/>
 </head>
 <body>
 <header class="header--main-page">
@@ -27,8 +26,10 @@
             <li>Witaj ${loggedUser.firstName}</li>
         </ul>
         <ul>
-            <li><a href="/user/update" class="btn btn--without-border">Edytuj profil</a></li>
             <li><a href="/user/donations" class="btn btn--without-border">Przekazane dary</a></li>
+            <li><a href="/user/update" class="btn btn--without-border">Edytuj profil</a></li>
+            <li><a href="/user/update/passwordChange" class="btn btn--without-border">Zmień hasło</a></li>
+
         </ul>
         <ul>
             <li><a href="/form" class="btn btn--without-border active">Start</a></li>
@@ -141,6 +142,6 @@
 </section>
 
 <%@include file="../header_footer/footer.jsp" %>
-<script src="<c:url value="/js/app.js"/>"></script>
+<script src="${pageContext.request.contextPath}/js/app.js"></script>
 </body>
 </html>

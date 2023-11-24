@@ -16,9 +16,9 @@ public interface UserService {
 
     void save(User user);
 
-    User getByUsername(String name);
+    void update(User user, User newUser);
 
-    User getUserWithDonationsByUserName(String name);
+    User getByUsername(String name);
 
     boolean isUsernameUnique(String username);
 
@@ -26,4 +26,5 @@ public interface UserService {
 
     Long countAllByRole(String role);
 
+    void changePassword(User user, User userUpdated);
 }

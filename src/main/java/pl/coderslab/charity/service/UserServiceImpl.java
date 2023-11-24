@@ -1,6 +1,8 @@
 package pl.coderslab.charity.service;
 
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.coderslab.charity.controller.mapper.UserMapper;
@@ -49,7 +51,6 @@ public class UserServiceImpl implements UserService {
                 oldUser.setRole(user.getRole());
                 oldUser.setActive(user.getActive());
 
-
                 userRepository.save(oldUser);
             }
         } else {
@@ -58,6 +59,19 @@ public class UserServiceImpl implements UserService {
             user.setActive(true);
             userRepository.save(user);
         }
+    }
+
+    public void update(User user, User userUpdated) {
+
+        userUpdated.setUsername(user.getUsername());
+        userUpdated.setFirstName(user.getFirstName());
+        userUpdated.setLastName(user.getLastName());
+        userRepository.save(userUpdated);
+    }
+
+    public void changePassword(User user, User userUpdated) {
+        userUpdated.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(userUpdated);
     }
 
     public User getByUsername(String username) {
@@ -82,22 +96,35 @@ public class UserServiceImpl implements UserService {
         return existingUser == null;
     }
 
+    public boolean isUsernameUniqueForUpdate(String username, Long userId) {
+        User existingUser = userRepository.getByUsername(username);
+        return existingUser == null || existingUser.getId().equals(userId);
+    }
+
     @Override
     public boolean deleteUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
             User userToDelete = user.get();
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String currentUsername = authentication.getName();
+
+            if (currentUsername.equals(userToDelete.getUsername())) {
+                return false;
+            }
+
             if (userToDelete.getRole().equals("ROLE_ADMIN")) {
                 Long adminCount = userRepository.countAllByRole("ROLE_ADMIN");
                 if (adminCount > 1) {
                     userRepository.deleteById(id);
                 } else {
-                    return false; // Nie usuwaj ostatniego administratora
+                    return false;
                 }
             } else {
                 userRepository.deleteById(id);
             }
-            return true; // Usunięcie zakończone sukcesem
+            return true;
         }
         return false;
     }
@@ -106,4 +133,5 @@ public class UserServiceImpl implements UserService {
     public Long countAllByRole(String role) {
         return userRepository.countAllByRole(role);
     }
+
 }

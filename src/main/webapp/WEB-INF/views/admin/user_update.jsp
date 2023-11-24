@@ -65,18 +65,17 @@
             <form:hidden path="password" id="password"/>
             <form:errors path="password"/>
         </div>
-        <div class="form-group">
+        <%--        <div class="form-group">--%>
 
-            <form:hidden path="passwordConfirm" id="passwordConfirm"/>
-            <form:errors path="passwordConfirm"/>
-        </div>
+        <%--            <form:hidden path="passwordConfirm" id="passwordConfirm"/>--%>
+        <%--            <form:errors path="passwordConfirm"/>--%>
+        <%--        </div>--%>
         <div class="form-group form-group--buttons">
             <form:hidden path="id" id="id"/>
             <form:button class="btn" type="submit">Zapisz zmiany</form:button>
             <a href=${pageContext.request.contextPath}/admin class="btn">Wstecz</a>
         </div>
     </form:form>
-</section>
 </section>
 
 <%@include file="/WEB-INF/views/header_footer/footer.jsp" %>
