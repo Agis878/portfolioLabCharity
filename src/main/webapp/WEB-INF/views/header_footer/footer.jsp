@@ -42,7 +42,9 @@
                 <form:textarea path="message" name="message" placeholder="Wiadomość" rows="1"/>
             </div>
             <input type="hidden" id="to" name="to" value="${emailAddress}"/>
+            <div class="form-group form-group--buttons">
             <form:button type="submit">Wyślij</form:button>
+            </div>
         </form:form>
     </div>
     <div class="bottom-line">

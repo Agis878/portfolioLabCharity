@@ -211,9 +211,10 @@
                     <button type="button" class="btn prev-step">Wstecz</button>
                     <form:button class="btn">Potwierdzam</form:button>
                 </div>
-
-
             </div>
+
+            <form:hidden path="user" value="${not empty loggedUser ? loggedUser.id : ''}"></form:hidden>
+
         </form:form>
     </div>
 </section>

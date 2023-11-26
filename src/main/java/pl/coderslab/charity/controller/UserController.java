@@ -87,7 +87,9 @@ public class UserController {
     }
 
     @GetMapping("/update/passwordChange")
-    public String updatePasswordForm(Model model) {
+    public String updatePasswordForm(Model model, @AuthenticationPrincipal UserDetails authenticatedUser) {
+        User loggedUser = userService.getByUsername(authenticatedUser.getUsername());
+        model.addAttribute("loggedUser", loggedUser);
         model.addAttribute("passwordUpdateDTO", new PasswordUpdateDto(null, null));
         return "user/loggedUser-password-update";
     }
@@ -110,5 +112,14 @@ public class UserController {
         userService.changePassword(user, userUpdated);
         return "redirect:/user";
     }
+
+    @GetMapping("/donations")
+    public String donationListView(Model model, @AuthenticationPrincipal UserDetails authenticatedUser) {
+        User loggedUser = userService.getByUsername(authenticatedUser.getUsername());
+        model.addAttribute("loggedUser", loggedUser);
+        model.addAttribute("donationList", donationService.findAllByUser(loggedUser));
+        return "user/donation-view";
+    }
+
 }
 
