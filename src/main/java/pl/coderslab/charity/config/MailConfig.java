@@ -13,6 +13,7 @@ import java.util.Properties;
 @Configuration
 @PropertySource("classpath:application.properties")
 public class MailConfig {
+
     @Bean
     public JavaMailSender getJavaMailSender(@Value("${spring.mail.host}") String host,
                                             @Value("${spring.mail.port}") int port,
@@ -37,11 +38,21 @@ public class MailConfig {
         return mailSender;
     }
 
+//    @Bean
+//    public SpringResourceTemplateResolver templateResolver() {
+//        SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+//        resolver.setPrefix("classpath:/templates/");
+//        resolver.setSuffix(".html");
+//        resolver.setTemplateMode(TemplateMode.HTML);
+//        resolver.setCharacterEncoding("UTF-8");
+//        resolver.setCacheable(false);  // W trybie deweloperskim, wyłączamy cache
+//        return resolver;
+//    }
+
+
     @Bean
-    public SimpleMailMessage templateSimpleMessage() {
+    public SimpleMailMessage template() {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setText(
-                "This is the test email template for your email:\n%s\n");
         return message;
     }
 //    @Bean

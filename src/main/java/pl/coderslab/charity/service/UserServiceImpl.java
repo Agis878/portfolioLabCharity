@@ -11,6 +11,7 @@ import pl.coderslab.charity.repositories.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -45,18 +46,18 @@ public class UserServiceImpl implements UserService {
             Optional<User> existingUser = userRepository.findById(user.getId());
             if (existingUser.isPresent()) {
                 User oldUser = existingUser.get();
+
                 oldUser.setUsername(user.getUsername());
                 oldUser.setFirstName(user.getFirstName());
                 oldUser.setLastName(user.getLastName());
                 oldUser.setRole(user.getRole());
                 oldUser.setActive(user.getActive());
-
                 userRepository.save(oldUser);
             }
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRole("ROLE_USER");
-            user.setActive(true);
+            user.setActive(false);
             userRepository.save(user);
         }
     }
@@ -79,13 +80,6 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Retrieves a user by their username along with associated reservations.
-     */
-    public User getUserWithDonationsByUserName(String name) {
-        return userRepository.getUserWithDonationsByUsername(name);
-    }
-
-    /**
      * Checks if a username is unique.
      *
      * @param username The username to be checked.
@@ -94,11 +88,6 @@ public class UserServiceImpl implements UserService {
     public boolean isUsernameUnique(String username) {
         User existingUser = userRepository.getByUsername(username);
         return existingUser == null;
-    }
-
-    public boolean isUsernameUniqueForUpdate(String username, Long userId) {
-        User existingUser = userRepository.getByUsername(username);
-        return existingUser == null || existingUser.getId().equals(userId);
     }
 
     @Override
@@ -132,6 +121,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long countAllByRole(String role) {
         return userRepository.countAllByRole(role);
+    }
+
+    public String generateActivationCode() {
+        return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public User findByActivationCode(String activationCode) {
+        return userRepository.findByActivationCode(activationCode);
     }
 
 }

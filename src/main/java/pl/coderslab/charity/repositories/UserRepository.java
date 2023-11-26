@@ -26,4 +26,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Long countAllByRole(String role);
 
+    User findByActivationCode(String activationCode);
 }

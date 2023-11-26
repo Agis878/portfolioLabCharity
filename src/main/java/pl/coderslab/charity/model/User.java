@@ -47,6 +47,9 @@ public class User {
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
     private List<Donation> donations;
+
+    @Column(name = "activation_code")
+    private String activationCode;
 }
 
 

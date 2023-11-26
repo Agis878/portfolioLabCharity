@@ -27,4 +27,8 @@ public interface UserService {
     Long countAllByRole(String role);
 
     void changePassword(User user, User userUpdated);
+
+    String generateActivationCode();
+
+    User findByActivationCode(String activationCode);
 }

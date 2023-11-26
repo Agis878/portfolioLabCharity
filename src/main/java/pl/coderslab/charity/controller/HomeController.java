@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.coderslab.charity.controller.dto.RegisterDto;
+import pl.coderslab.charity.mail.EmailService;
 import pl.coderslab.charity.mail.Feedback;
 import pl.coderslab.charity.repositories.UserRepository;
 import pl.coderslab.charity.service.DonationService;
@@ -25,8 +27,19 @@ import static pl.coderslab.charity.controller.mapper.UserMapper.mapToUser;
 @RequestMapping("/")
 public class HomeController {
 
+    private final InstitutionService institutionService;
+    private final DonationService donationService;
+    private final UserService userService;
+    private final EmailService emailService;
     @Value("${spring.mail.username}")
     private String emailAddress;
+
+    public HomeController(InstitutionService institutionService, DonationService donationService, UserRepository userRepository, PasswordEncoder passwordEncoder, UserService userService, EmailService emailService) {
+        this.institutionService = institutionService;
+        this.donationService = donationService;
+        this.userService = userService;
+        this.emailService = emailService;
+    }
 
     @ModelAttribute
     public void mailAddress(Model model) {
@@ -36,15 +49,6 @@ public class HomeController {
     @ModelAttribute
     public void EmailForm(Model model) {
         model.addAttribute("feedback", new Feedback());
-    }
-    private final InstitutionService institutionService;
-    private final DonationService donationService;
-    private final UserService userService;
-
-    public HomeController(InstitutionService institutionService, DonationService donationService, UserRepository userRepository, PasswordEncoder passwordEncoder, UserService userService) {
-        this.institutionService = institutionService;
-        this.donationService = donationService;
-        this.userService = userService;
     }
 
     @GetMapping
@@ -66,17 +70,22 @@ public class HomeController {
         if (errors.hasErrors()) {
             return "register";
         }
-
         if (!userService.isUsernameUnique(userDto.username())) {
             errors.rejectValue("username", "error.username.exists", "Username already exists");
             return "register";
         }
-
         if (!userDto.password().equals(userDto.passwordConfirm())) {
             errors.rejectValue("passwordConfirm", "error.password.mismatch", "Passwords do not match");
             return "register";
         }
-        userService.save(mapToUser(userDto));
+        String activationCode = userService.generateActivationCode();
+        userService.save(mapToUser(userDto, activationCode));
+
+        String activationLink = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/activate")
+                .queryParam("code", activationCode)
+                .toUriString();
+        emailService.sendActivationEmail(userDto.username(), activationLink);
 
         return "redirect:/login";
     }

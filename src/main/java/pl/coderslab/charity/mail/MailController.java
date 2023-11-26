@@ -62,7 +62,7 @@ public class MailController {
             return "header_footer/footer";
         }
         try {
-            emailService.sendSimpleMessage(feedback);
+            emailService.sendMessageFromContactForm(feedback);
             model.addAttribute("successMessage", "Email sent successfully!");
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error sending email: " + e.getMessage());
