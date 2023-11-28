@@ -20,20 +20,22 @@
 
 </head>
 <body>
-<header class="header--form-page">
-    <include file="header_footer/header.jsp"></include>
-
-    <div class="slogan container container--90">
+<div class="slogan container container--90">
         <h2>
             Dziękujemy za przesłanie formularza. Na maila prześlemy wszelkie
             informacje o odbiorze.
         </h2>
     </div>
-</header>
-
-
-<script src="header_footer/footer.jsp"></script>
-<include file="header_footer/footer.jsp"/>
+<section class="steps">
+    <c:choose>
+        <c:when test="${not empty loggedUser}">
+            <a href="/user" class="btn btn--small">Powrót do strony głównej</a>
+        </c:when>
+        <c:otherwise>
+            <a href="/" class="btn btn--small">Powrót do strony głównej</a>
+        </c:otherwise>
+    </c:choose>
+</section>
 </body>
 </html>
 

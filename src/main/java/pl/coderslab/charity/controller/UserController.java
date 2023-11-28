@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.coderslab.charity.controller.dto.PasswordUpdateDto;
-import pl.coderslab.charity.controller.dto.UpdateDto;
-import pl.coderslab.charity.mail.Feedback;
+import pl.coderslab.charity.model.Feedback;
 import pl.coderslab.charity.model.User;
+import pl.coderslab.charity.model.dto.PasswordUpdateDto;
+import pl.coderslab.charity.model.dto.UpdateDto;
 import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.InstitutionService;
 import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
 
-import static pl.coderslab.charity.controller.mapper.UpdateMapper.mapToUpdateUser;
-import static pl.coderslab.charity.controller.mapper.UserPasswordMapper.mapToUserPassword;
+import static pl.coderslab.charity.model.mapper.UpdateMapper.mapToUpdateUser;
+import static pl.coderslab.charity.model.mapper.UserPasswordMapper.mapToUserPassword;
 
 @Controller
 @RequestMapping("user")
@@ -120,6 +120,5 @@ public class UserController {
         model.addAttribute("donationList", donationService.findAllByUser(loggedUser));
         return "user/donation-view";
     }
-
 }
 

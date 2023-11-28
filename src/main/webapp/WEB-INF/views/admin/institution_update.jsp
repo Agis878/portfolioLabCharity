@@ -26,51 +26,27 @@
 </header>
 
 <section class="login-page">
-    <h2>Edytuj użytkownika</h2>
-    <form:form method="post" modelAttribute="user" action="/admin/update" autocomplete="off">
+    <h2>Edytuj instytucję</h2>
+    <form:form method="post" modelAttribute="institutionToUpdate" action="/admin/institutions/update"
+               autocomplete="off">
 
         <div class="form-group">
 
-            <form:input path="username" id="username" placeholder="Email"/>
-            <form:errors path="username"/>
+            <form:input path="name" id="name" placeholder="name"/>
+            <form:errors path="name"/>
         </div>
         <div class="form-group">
-            <form:input path="firstName" id="firstName" placeholder="Imię"/>
-            <form:errors path="firstName"/>
-        </div>
-        <div class="form-group">
-            <form:input path="lastName" id="lastName" placeholder="Nazwisko"/>
-            <form:errors path="lastName"/>
+            <form:input path="description" id="description" placeholder="description"/>
+            <form:errors path="description"/>
         </div>
 
-        <div class="form-group">
-
-            <form:select path="role" id="role">
-                <form:option value="" label="--Select Role --"/>
-                <form:option value="ROLE_USER">USER</form:option>
-                <form:option value="ROLE_ADMIN">ADMIN</form:option>
-            </form:select>
-            <form:errors path="role"/>
-        </div>
-        <div class="form-group">
-
-            <form:select path="active" id="active">
-                <form:option value="" label="--Select is Active --"/>
-                <form:option value="true">True</form:option>
-                <form:option value="false">False</form:option>
-            </form:select>
-            <form:errors path="active"/>
-        </div>
-        <div class="form-group">
-            <form:hidden path="password" id="password"/>
-            <form:errors path="password"/>
-        </div>
         <div class="form-group form-group--buttons">
             <form:hidden path="id" id="id"/>
             <form:button class="btn" type="submit">Zapisz zmiany</form:button>
             <a href=${pageContext.request.contextPath}/admin class="btn">Wstecz</a>
         </div>
     </form:form>
+</section>
 </section>
 
 <%@include file="/WEB-INF/views/header_footer/footer.jsp" %>

@@ -39,6 +39,7 @@ public class DonationServiceImpl implements DonationService {
 
     @Override
     public void save(Donation donation) {
+        donationRepository.save(donation);
     }
 
     public List<Category> getCategoriesForDonation(Long donationId) {
@@ -48,9 +49,7 @@ public class DonationServiceImpl implements DonationService {
             Donation donation = optionalDonation.get();
             return donation.getCategories();
         } else {
-            // Obsłuż sytuację, gdy donacja o danym ID nie istnieje
             return Collections.emptyList();
         }
     }
-
 }

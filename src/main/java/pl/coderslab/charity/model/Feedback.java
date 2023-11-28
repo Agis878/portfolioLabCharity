@@ -1,4 +1,4 @@
-package pl.coderslab.charity.mail;
+package pl.coderslab.charity.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,5 +15,4 @@ public class Feedback {
     @NotNull
     private String email;
     private String message;
-
 }

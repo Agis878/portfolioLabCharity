@@ -26,9 +26,10 @@
             <li>Witaj ${loggedUser.firstName}</li>
         </ul>
         <ul>
-            <li><a href="/user/donations" class="btn btn--without-border">Przekazane dary</a></li>
-            <li><a href="/user/update" class="btn btn--without-border">Edytuj profil</a></li>
-            <li><a href="/user/update/passwordChange" class="btn btn--without-border">Zmień hasło</a></li>
+            <li><a href="/user/donations" class="btn btn--small btn--without-border">Przekazane dary</a></li>
+            <li><a href="/user/update" class="btn btn--small btn--without-border">Edytuj profil</a></li>
+            <li><a href="/user/update/passwordChange" class="btn btn--small btn--without-border">Zmień hasło</a></li>
+            <li><a href="/logout" class="btn btn--small btn--without-border">Wyloguj</a></li>
 
         </ul>
         <ul>
@@ -50,7 +51,6 @@
         </div>
     </div>
 </header>
-
 <section class="stats">
     <div class="container container--85">
         <div class="stats--item">

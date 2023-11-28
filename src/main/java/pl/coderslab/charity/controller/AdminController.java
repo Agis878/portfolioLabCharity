@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.charity.mail.Feedback;
+import pl.coderslab.charity.model.Feedback;
 import pl.coderslab.charity.model.Institution;
 import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.service.DonationService;
@@ -17,6 +17,7 @@ import pl.coderslab.charity.service.UserService;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,12 @@ public class AdminController {
     @Value("${spring.mail.username}")
     private String emailAddress;
 
+    public AdminController(UserService userService, InstitutionService institutionService, DonationService donationService) {
+        this.userService = userService;
+        this.institutionService = institutionService;
+        this.donationService = donationService;
+    }
+
     @ModelAttribute
     public void mailAddress(Model model) {
         model.addAttribute("emailAddress", emailAddress);
@@ -38,12 +45,6 @@ public class AdminController {
     @ModelAttribute
     public void EmailForm(Model model) {
         model.addAttribute("feedback", new Feedback());
-    }
-
-    public AdminController(UserService userService, InstitutionService institutionService, DonationService donationService) {
-        this.userService = userService;
-        this.institutionService = institutionService;
-        this.donationService = donationService;
     }
 
     @GetMapping
@@ -58,7 +59,6 @@ public class AdminController {
     @GetMapping("/admins")
     public String showAdminsList(Model model) {
         model.addAttribute("adminList", userService.findAllByRole("ROLE_ADMIN"));
-
         return "admin/table_admins";
     }
 
@@ -81,11 +81,22 @@ public class AdminController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Long id, Model model) {
+    public String deleteUser(@PathVariable Long id, Model model, Principal principal) {
         Optional<User> deletedUser = userService.findById(id);
-        boolean deleteSuccess = userService.deleteUserById(id);
-        if (!deleteSuccess) {
-            model.addAttribute("error", "Nie można usunąć ostatniego administratora");
+        if (deletedUser.isPresent()) {
+            User userToDelete = deletedUser.get();
+
+            String username = principal.getName();
+            if (username.equals(userToDelete.getUsername())) {
+                model.addAttribute("error", "Nie możesz usunąć samego siebie");
+                return "error-page";
+            }
+
+            boolean deleteSuccess = userService.deleteUserById(id);
+            if (!deleteSuccess) {
+                model.addAttribute("error", "Nie można usunąć ostatniego administratora");
+                return "error-page";
+            }
         }
         String redirectPath = deletedUser.get().getRole().equals("ROLE_ADMIN") ? "redirect:/admin/admins" : "redirect:/admin/users";
         return redirectPath;

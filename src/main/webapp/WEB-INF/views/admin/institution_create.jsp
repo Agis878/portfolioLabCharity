@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: agnieszka
-  Date: 05.11.2023
-  Time: 13:16
+  Date: 12.11.2023
+  Time: 15:05
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -10,6 +10,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -21,28 +22,29 @@
 </head>
 <body>
 <header>
-    <%@include file="header_footer/header.jsp" %>
+    <%@include file="/WEB-INF/views/header_footer/header.jsp" %>
 </header>
 
 <section class="login-page">
-    <h2>Zaloguj się</h2>
-    <form:form action="/login" method="post">
-
+    <h2>Dodaj instytucję</h2>
+    <form:form method="post" modelAttribute="institution" action="/admin/institutions/add" autocomplete="off">
         <div class="form-group">
-            <input type="text" required name="username" id="username" class="form-control" placeholder="Email"/>
+            <form:input path="name" id="name" placeholder="Nazwa"/>
+            <form:errors path="name"/>
         </div>
         <div class="form-group">
-            <input type="password" required name="password" id="password" class="form-control" placeholder="Password"/>
-            <a href="<spring:url value='forgot-password'/>"
-               class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
+            <form:input path="description" id="description" placeholder="Opis"/>
+            <form:errors path="description"/>
         </div>
         <div class="form-group form-group--buttons">
-            <a href="/register" class="btn btn--without-border">Załóż konto</a>
-            <button class="btn" type="submit">Zaloguj się</button>
+
+            <form:button class="btn" type="submit">Dodaj instytucję</form:button>
+            <a href=${pageContext.request.contextPath}/admin class="btn">Wstecz</a>
         </div>
     </form:form>
 </section>
 
-<%@include file="header_footer/footer.jsp" %>
+<%@include file="/WEB-INF/views/header_footer/footer.jsp" %>
 </body>
 </html>
+

@@ -65,7 +65,6 @@ public class ResetPasswordController {
             return "error-page";
         }
     }
-
     @PostMapping("/resetPassword")
     public String ResetPassword(@RequestParam String resetPasswordCode,
                                 @Valid @ModelAttribute("passwordUpdateDTO") PasswordUpdateDto passwordUpdateDto,

@@ -48,12 +48,13 @@ public class DonationController {
         }
         return "form";
     }
-
     @PostMapping
-    public String addDonation(@Valid Donation donation) {
+    public String addDonation(@Valid Donation donation, Model model, @AuthenticationPrincipal UserDetails authenticatedUser) {
+        if (authenticatedUser != null) {
+            User loggedUser = userService.getByUsername(authenticatedUser.getUsername());
+            model.addAttribute("loggedUser", loggedUser);
+        }
         donationService.save(donation);
         return "form-confirmation";
     }
-
-
 }

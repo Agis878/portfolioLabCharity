@@ -8,10 +8,10 @@ import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.service.UserService;
 
 @Controller
-public class ActivationController {
+public class AccountActivationController {
     private final UserService userService;
 
-    public ActivationController(UserService userService) {
+    public AccountActivationController(UserService userService) {
         this.userService = userService;
     }
 
@@ -25,6 +25,6 @@ public class ActivationController {
         } else {
             model.addAttribute("activationError", true);
         }
-        return "activate";
+        return "register-account-activation";
     }
 }

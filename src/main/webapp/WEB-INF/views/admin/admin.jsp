@@ -336,7 +336,8 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Lista Administratorów
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${adminQty}</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Liczba
+                                                administratorów: ${adminQty}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -359,7 +360,8 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Lista Użytkowników
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${userQty}</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Liczba
+                                                użytkowników: ${userQty}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -372,7 +374,7 @@
 
                     <!-- Lista instytucji Card Example -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <a href=${pageContext.request.contextPath}/admin/intstitutions
+                        <a href=${pageContext.request.contextPath}/admin/institutions
                            style="text-decoration: none; color: inherit;">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
@@ -381,7 +383,8 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Lista Instytucji
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${adminQty}</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Liczba
+                                                instytucji:${institutionQty}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -435,7 +438,27 @@
                         </div>
                     </a>
                 </div>
-
+                <!-- Dodaj użytkownika Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <a href=${pageContext.request.contextPath}/admin/institutions/add
+                       style="text-decoration: none; color: inherit;">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            Dodaj Instytucję
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">+</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
 
             <!-- Content Row -->

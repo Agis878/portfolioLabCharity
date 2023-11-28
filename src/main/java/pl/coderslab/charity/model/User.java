@@ -50,6 +50,9 @@ public class User {
 
     @Column(name = "activation_code")
     private String activationCode;
+
+    @Column(name = "resetPassword_code")
+    private String resetPasswordCode;
 }
 
 

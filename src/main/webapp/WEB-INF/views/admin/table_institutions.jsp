@@ -18,7 +18,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Lista Administratorów</title>
+    <title>Lista Instytucji</title>
 
     <!-- Custom fonts for this template -->
     <link href="${pageContext.request.contextPath}/bootstrap/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -257,12 +257,12 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Lista administratorów</h1>
+                <h1 class="h3 mb-2 text-gray-800">Lista Instutycji</h1>
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Tabela Administratorzy</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Tabela Instytucji</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -270,38 +270,29 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Email</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Role</th>
-                                    <th>Active</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Email</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Role</th>
-                                    <th>Active</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                <c:forEach var="admin" items="${adminList}">
+                                <c:forEach var="institution" items="${institutionList}">
                                     <tr>
-                                        <td>${admin.id}</td>
-                                        <td>${admin.username}</td>
-                                        <td>${admin.firstName}</td>
-                                        <td>${admin.lastName}</td>
-                                        <td>${admin.role}</td>
-                                        <td>${admin.active}</td>
+                                        <td>${institution.id}</td>
+                                        <td>${institution.name}</td>
+                                        <td>${institution.description}</td>
                                         <td>
-                                            <a href="<c:url value='update/${admin.id}'/>">Edit</a>
+                                            <a href="<c:url value='institutions/update/${institution.id}'/>">Edit</a>
                                             |
-                                            <a href="<c:url value='delete/${admin.id}'/>">Delete</a>
+                                            <a href="<c:url value='institutions/delete/${institution.id}'/>">Delete</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

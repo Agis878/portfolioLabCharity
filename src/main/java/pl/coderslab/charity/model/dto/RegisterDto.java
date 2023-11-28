@@ -1,4 +1,4 @@
-package pl.coderslab.charity.controller.dto;
+package pl.coderslab.charity.model.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

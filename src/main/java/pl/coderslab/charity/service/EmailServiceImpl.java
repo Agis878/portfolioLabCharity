@@ -1,4 +1,4 @@
-package pl.coderslab.charity.mail;
+package pl.coderslab.charity.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
@@ -6,6 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import pl.coderslab.charity.model.Feedback;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -58,6 +59,27 @@ public class EmailServiceImpl implements EmailService {
 
             String messageText = "Dziękujemy za rejestrację! Aktywuj swoje konto klikając w poniższy link:<br/>"
                     + "<a href=\"" + activationLink + "\">Aktywuj konto</a>";
+
+            helper.setText(messageText, true);
+
+            mailSender.send(message);
+        } catch (MessagingException | MailException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendResetPasswordActivationEmail(String toEmail, String resetPasswordLink) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setFrom("agistest.85@gmail.com");
+            helper.setTo(toEmail);
+            helper.setSubject("Reset Password");
+
+
+            String messageText = "Kliknij w poniższy link, by zresetować hasło:<br/>"
+                    + "<a href=\"" + resetPasswordLink + "\">Zresetuj hasło</a>";
 
             helper.setText(messageText, true);
 

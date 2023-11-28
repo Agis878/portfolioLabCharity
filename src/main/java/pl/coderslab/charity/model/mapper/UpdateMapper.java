@@ -1,8 +1,8 @@
-package pl.coderslab.charity.controller.mapper;
+package pl.coderslab.charity.model.mapper;
 
 import org.springframework.stereotype.Component;
-import pl.coderslab.charity.controller.dto.UpdateDto;
 import pl.coderslab.charity.model.User;
+import pl.coderslab.charity.model.dto.UpdateDto;
 
 @Component
 public class UpdateMapper {
