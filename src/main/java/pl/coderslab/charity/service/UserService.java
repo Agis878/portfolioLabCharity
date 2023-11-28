@@ -31,4 +31,10 @@ public interface UserService {
     String generateActivationCode();
 
     User findByActivationCode(String activationCode);
+
+    boolean userExist(String username);
+
+    User findByResetPasswordCode(String resetPasswordCode);
+
+    void saveUserWithToken(User user, String resetPasswordCode);
 }

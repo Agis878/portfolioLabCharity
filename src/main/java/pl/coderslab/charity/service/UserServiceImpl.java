@@ -5,8 +5,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.coderslab.charity.controller.mapper.UserMapper;
 import pl.coderslab.charity.model.User;
+import pl.coderslab.charity.model.mapper.UserMapper;
 import pl.coderslab.charity.repositories.UserRepository;
 
 import java.util.List;
@@ -130,6 +130,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByActivationCode(String activationCode) {
         return userRepository.findByActivationCode(activationCode);
+    }
+
+    @Override
+    public boolean userExist(String username) {
+        return userRepository.getByUsername(username) != null;
+    }
+
+    @Override
+    public User findByResetPasswordCode(String resetPasswordCode) {
+        return userRepository.findByResetPasswordCode(resetPasswordCode);
+    }
+
+    public void saveUserWithToken(User user, String resetPasswordCode) {
+        user.setResetPasswordCode(resetPasswordCode);
+        userRepository.save(user);
     }
 
 }

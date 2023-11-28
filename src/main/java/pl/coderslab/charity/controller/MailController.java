@@ -1,4 +1,4 @@
-package pl.coderslab.charity.mail;
+package pl.coderslab.charity.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import pl.coderslab.charity.model.Feedback;
 import pl.coderslab.charity.model.User;
+import pl.coderslab.charity.service.EmailService;
 import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;

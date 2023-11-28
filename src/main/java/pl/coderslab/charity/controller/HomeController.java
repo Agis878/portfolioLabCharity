@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.coderslab.charity.controller.dto.RegisterDto;
-import pl.coderslab.charity.mail.EmailService;
-import pl.coderslab.charity.mail.Feedback;
+import pl.coderslab.charity.model.Feedback;
+import pl.coderslab.charity.model.dto.RegisterDto;
 import pl.coderslab.charity.repositories.UserRepository;
 import pl.coderslab.charity.service.DonationService;
+import pl.coderslab.charity.service.EmailService;
 import pl.coderslab.charity.service.InstitutionService;
 import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
 
-import static pl.coderslab.charity.controller.mapper.UserMapper.mapToUser;
+import static pl.coderslab.charity.model.mapper.UserMapper.mapToUser;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping
 public class HomeController {
 
     private final InstitutionService institutionService;
