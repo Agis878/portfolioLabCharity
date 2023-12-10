@@ -10,15 +10,8 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    /**
-     * Retrieves a user by their username.
-     */
     User getByUsername(String username);
 
-
-    /**
-     * Retrieves a user by their username along with associated reservations using EntityGraph.
-     */
     @EntityGraph(type = EntityGraph.EntityGraphType.LOAD, attributePaths = {"donations"})
     User getUserWithDonationsByUsername(String username);
 

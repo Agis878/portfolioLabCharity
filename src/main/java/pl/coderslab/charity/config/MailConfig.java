@@ -31,35 +31,13 @@ public class MailConfig {
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", auth);
         props.put("mail.smtp.starttls.enable", starttls);
-
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.debug", "true");
-
         return mailSender;
     }
-
-//    @Bean
-//    public SpringResourceTemplateResolver templateResolver() {
-//        SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
-//        resolver.setPrefix("classpath:/templates/");
-//        resolver.setSuffix(".html");
-//        resolver.setTemplateMode(TemplateMode.HTML);
-//        resolver.setCharacterEncoding("UTF-8");
-//        resolver.setCacheable(false);  // W trybie deweloperskim, wyłączamy cache
-//        return resolver;
-//    }
-
-
     @Bean
     public SimpleMailMessage template() {
         SimpleMailMessage message = new SimpleMailMessage();
         return message;
     }
-//    @Bean
-//    public SimpleMailMessage templateSimpleMessage() {
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setText(
-//                "This is the test email template for your email:\n%s\n");
-//        return message;
-//    }
 }

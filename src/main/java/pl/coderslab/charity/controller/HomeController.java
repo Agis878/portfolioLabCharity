@@ -1,7 +1,6 @@
 package pl.coderslab.charity.controller;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.coderslab.charity.model.Feedback;
 import pl.coderslab.charity.model.dto.RegisterDto;
-import pl.coderslab.charity.repositories.UserRepository;
 import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.EmailService;
 import pl.coderslab.charity.service.InstitutionService;
@@ -34,7 +32,7 @@ public class HomeController {
     @Value("${spring.mail.username}")
     private String emailAddress;
 
-    public HomeController(InstitutionService institutionService, DonationService donationService, UserRepository userRepository, PasswordEncoder passwordEncoder, UserService userService, EmailService emailService) {
+    public HomeController(InstitutionService institutionService, DonationService donationService, UserService userService, EmailService emailService) {
         this.institutionService = institutionService;
         this.donationService = donationService;
         this.userService = userService;
