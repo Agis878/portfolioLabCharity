@@ -3,9 +3,13 @@ package pl.coderslab.charity.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 @Configuration
@@ -30,13 +34,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .formLogin().loginPage("/login")
                 .successHandler((request, response, authentication) -> {
-                    if (authentication.getAuthorities().stream()
-                            .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"))) {
-                        response.sendRedirect("/admin");
-                    } else if (authentication.getAuthorities().stream()
-                            .anyMatch(auth -> auth.getAuthority().equals("ROLE_USER"))) {
-                        response.sendRedirect("/user");
-                    }
+                    handleSuccess(response, authentication);
                 })
                 .permitAll()
                 .and()
@@ -45,6 +43,16 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/login")
                 .and()
                 .build();
+    }
+
+    private static void handleSuccess(HttpServletResponse response, Authentication authentication) throws IOException {
+        if (authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"))) {
+            response.sendRedirect("/admin");
+        } else if (authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_USER"))) {
+            response.sendRedirect("/user");
+        }
     }
 }
 
