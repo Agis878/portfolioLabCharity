@@ -1,0 +1,38 @@
+version: '3'
+services:
+  app:
+    build: .
+    volumes:
+      - ./src/main/webapp:/app/src/main/webapp
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/charity_donation?serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: coderslab
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - mynetwork
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: coderslab
+      MYSQL_DATABASE: charity_donation
+      MYSQL_PASSWORD: coderslab
+      MYSQL_USER: coderslab
+    ports:
+      - "3307:3306"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge      
+      
+
+ 
+
+
